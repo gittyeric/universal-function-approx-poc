@@ -1,7 +1,9 @@
 Here's a minimalistic implementation of a neural net factored as a "Universal Function Approximator".  The key realization should be that with minor modification to the neural net architecture, you can approximate any "blackbox" function with enough data and compute.  This example teaches a simple 1 layer network how to multiply 2 inputs together.  You simply need Python3 (maybe 2?) installed with the following libraries:
 
 pip3 install numpy
+
 pip3 install tensorflow
+
 pip3 install keras
 
 Then run the script from command line:
