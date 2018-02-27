@@ -36,9 +36,11 @@ def denormalize(Y):
 # Create a blank Neural Net
 model = Sequential()
 
-# Add layers to Neural Net, 2 inputs to 50 neurons to 1 neuron's output.
-# The more complex the function, the more layers or units you may need
-model.add( Dense(units=1000, input_dim=2, activation=Softmax(axis=-1)) )
+# Add layers to Neural Net, 2 inputs to 101 neurons to 1 neuron's output.
+# In the case of multiplication up to 100, every hidden layer neuron will
+# learn to output 1 given a unique input, then the final
+# layer will add up all the 1's to give the product of the inputs
+model.add( Dense(units=101, input_dim=2, activation=Softmax(axis=-1)) )
 model.add( Dense(units=1) )
 
 # Initialize the model randomly
