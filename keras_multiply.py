@@ -16,7 +16,7 @@ def generateBatch(batchSize):
   Y = numpy.zeros(batchSize)
   
   for i in range(0, batchSize):
-    xi = [ randint(0, 100), randint(0, 100) ]
+    xi = [ randint(0, 10), randint(0, 10) ]
     yi = blackbox(xi[0], xi[1])
     
     X[i] = numpy.array(xi)
@@ -24,13 +24,22 @@ def generateBatch(batchSize):
     
   return X, Y
 
+def normalizeX(x):
+  return [x[0] / 10.0, x[1] / 10.0]
+
+def normalize(X, Y):
+  return numpy.array([normalizeX(xi) for xi in X]), numpy.array([yi / 100.0 for yi in Y])
+
+def denormalize(Y):
+  return numpy.array([yi*100 for yi in Y])
+
 # Create a blank Neural Net
 model = Sequential()
 
 # Add layers to Neural Net, 2 inputs to 50 neurons to 1 neuron's output.
 # The more complex the function, the more layers or units you may need
-model.add( Dense(units=50, input_dim=2, activation='linear') )
-model.add( Dense(units=1, activation='linear') )
+model.add( Dense(units=1000, input_dim=2, activation=Softmax(axis=-1)) )
+model.add( Dense(units=1) )
 
 # Initialize the model randomly
 model.compile(loss='mean_squared_error', optimizer="adam")
@@ -44,13 +53,15 @@ for epoch in range(0, epochs):
 
   # Generate batch of training data
   X, Y = generateBatch(batchSize)
+  Xnorm, Ynorm = normalize(X, Y)
   
   # Train model to 'fit' X batch to Y batch
-  model.fit(X, Y, epochs=1)
+  model.fit(Xnorm, Ynorm, epochs=1)
   
   # Evaluate trained model
   X, Y = generateBatch(batchSize)
-  predictedY = model.predict(X)
+  Xnorm, Ynorm = normalize(X, Y)
+  predictedY = denormalize(model.predict(Xnorm))
   
   errorSum = 0.0
   for i in range(0, batchSize):
