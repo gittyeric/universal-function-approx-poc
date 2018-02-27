@@ -10,4 +10,4 @@ Then run the script from command line:
 
 python3 keras_multiply.py
 
-If you have issues, there's detailed installation instructions for python, pip (package manager), keras and tensorflow.  You might also have to try the above commands without the '3'.
+The network should learn how to multiply with 99% accuracy within 100-150 epochs (5-10 minutes).  If you have issues, there's detailed installation instructions for python, pip (package manager), keras and tensorflow.  You might also have to try the above commands without the '3' in 'python3' / 'pip3'.
